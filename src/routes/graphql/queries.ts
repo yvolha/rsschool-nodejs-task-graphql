@@ -1,5 +1,7 @@
 import { GraphQLFloat, GraphQLObjectType, GraphQLString } from 'graphql/index.js';
 import { UUIDType } from './types/uuid.js';
+import { IUser } from './types/user.js';
+import { Context } from './types/interfaces.js';
 
 export const UserType = new GraphQLObjectType({
   name: "User",
@@ -8,4 +10,21 @@ export const UserType = new GraphQLObjectType({
     name: {type: GraphQLString},
     balance: {type: GraphQLFloat},
   })
+})
+
+
+export const UserQueries = {
+  user: {
+    type: UserType,
+    args: {id: {type: UUIDType}},
+    resolve: async (_, { id }: IUser, { loaders }: Context) =>
+    await loaders.user.load(id),
+  }
+}
+
+export const RootQuery = new GraphQLObjectType({
+  name: "RootQuery",
+  fields: {
+    ...UserQueries,
+  }
 })
