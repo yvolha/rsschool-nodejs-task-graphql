@@ -1,7 +1,6 @@
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
 import { createGqlResponseSchema, gqlResponseSchema, schema } from './schemas.js';
 import { GraphQLError, graphql, validate, parse } from 'graphql';
-import { PrismaClient } from '@prisma/client';
 import { createDataLoaders } from './dataloader/dataloaders.js';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
