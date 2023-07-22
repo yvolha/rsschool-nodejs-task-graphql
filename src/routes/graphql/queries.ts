@@ -1,7 +1,7 @@
 import { GraphQLFloat, GraphQLObjectType, GraphQLString } from 'graphql/index.js';
 import { UUIDType } from './types/uuid.js';
 import { IUser } from './types/user.js';
-import { Context } from './types/interfaces.js';
+import { Context } from './dataloader/dataloaders.js';
 
 export const UserType = new GraphQLObjectType({
   name: "User",
