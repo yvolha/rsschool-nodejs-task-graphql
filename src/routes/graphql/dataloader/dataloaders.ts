@@ -6,18 +6,18 @@ import { IProfile } from '../types/profile.js';
 // loader types and interfaces
 type IDataLoader = DataLoader<string, unknown | undefined>;
 
-export interface Loaders {
+export interface ILoaders {
   user: IDataLoader;
   profile: IDataLoader;
 }
 
-export interface Context {
+export interface IContext {
   db: PrismaClient;
-  loaders: Loaders;
+  loaders: ILoaders;
 }
 
 // unifying dataloader
-export const createDataLoaders = (db: PrismaClient): Loaders => {
+export const createDataLoaders = (db: PrismaClient): ILoaders => {
   return {
     user: createUserDataLoader(db),
     profile: createProfileDataLoader(db),
@@ -37,7 +37,7 @@ const createUserDataLoader = (db: PrismaClient) => {
 const createProfileDataLoader = (db: PrismaClient) => {
   return new DataLoader<string, IProfile | undefined>(async (keys: readonly string[]) => {
     return await db.profile.findMany({
-      where: { id: { in: keys as string[] } },
+      where: { id: { in: keys as string[] | undefined } },
     });
   });
 };
